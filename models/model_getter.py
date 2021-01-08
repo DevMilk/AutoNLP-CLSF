@@ -1,6 +1,5 @@
-from basic_bow_models import Direct_BOW_Model
-from basic_bow_models import TfIdf_BOW_Model
-from dataset import get_train_test_dataset, read_original_data
+from .basic_bow_models import *
+from .dataset import get_train_test_dataset, read_original_data
 import pandas as pd
 
 DATA_PATH = "dataset/7allV03.csv";

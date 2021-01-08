@@ -5,10 +5,10 @@ from sklearn.svm import LinearSVC
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfTransformer
-from preprocessing import clean_text
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score,f1_score
 from xgboost import XGBClassifier
+from .preprocessing import *
 
 def convert_results_to_str(y_test,y_pred):
   return str(confusion_matrix(y_test, y_pred))+"\n\n accuracy: "+str(accuracy_score(y_test,y_pred)) \
