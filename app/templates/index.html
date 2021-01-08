@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Turkish Text Categorization</title>
+<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/IndexStyle.css') }}">
+			<script type="text/javascript" src="{{ url_for('static', filename='js/IndexJs.js') }}"></script>
+
+</head>
+
+<body>
+	<div id="parameters"></div>
+	<div id="other">
+		<div id="output">
+			<a id="prediction">Dont forget training model, after splitting the data </a>
+			<a id="description">TURKISH TEXT TOPIC CATEGORIZATION IS DONE BY MACHINE LEARNING</a>
+
+		</div>
+		<div class="center">
+			<textarea id="input">google bu kez edward gorey dedi google bu kez de ünlü illüstratör yazar şair edward gorey için çok özel doodle hazırladı google ın 88 doğum gününe özel doodle yaptığı edward gorey 1925 yılında doğmuş nisan 2000 de hayata veda etmiştir edward gorey bir gothic art çizeridir tim burton un bu sanatçının çizimlerinden etkilendiği şeklinde bir söylenti vardır gorey bram stoker h g wells eliot gibi büyük yazarların kitaplarına illüstrasyonlar yaptı ayrıca sonraki yıllarda bir çok popüler çocuk kitabına çizimler yapmıştır gorey bir illüstratör olarak tarif edilir onun kitapları büyük kitapçılarda mizah karikatür bölümlerde bulunur gorey 100 den fazla kitap yazdı gorey 75 yaşında öldü</textarea>
+		  	<select name="acts" id="acts" onchange="callIfSplit();">
+			    <option value="predict">Predict</option>
+			    <option value="split">Split</option>
+			    <option value="test">Test</option>
+			    <option value="train">Train</option>
+		 	</select>
+			<nav>
+					<menu>
+
+						<menuitem class="main">
+							<a>ALL IN ONE</a>
+						</menuitem>
+
+						<menuitem>
+
+							<a>BOW</a>
+							<menu>
+
+			               <menuitem>
+			                  <a>BASIC</a>
+			                  <menu>
+			                     <menuitem><a>SVC</a></menuitem>
+			                     <menuitem><a>Random Forest</a></menuitem>
+			                     <menuitem><a>Multinomial Naive Bayes</a></menuitem>
+			                     <menuitem><a>Nearest Centroid</a></menuitem>
+			                     <menuitem><a>XGBoost</a></menuitem>
+			                  </menu>  
+							</menuitem>
+
+							<menuitem>
+			                  <a>TF-IDF</a>
+			                  <menu>
+			                     <menuitem><a>SVC</a></menuitem>
+			                     <menuitem><a>Random Forest</a></menuitem>
+			                     <menuitem><a>Multinomial Naive Bayes</a></menuitem>
+			                     <menuitem><a>Nearest Centroid</a></menuitem>
+			                     <menuitem><a>XGBoost</a></menuitem>
+			                  </menu>  
+							</menuitem>
+
+							</menu>
+						</menuitem>
+					</menu>
+			</nav>
+
+
+		</div>
+
+	</div>
+</body>
+
+<script type="text/javascript">
+	var items = document.getElementsByTagName("a");
+
+	for(var i=0;i<items.length;i++){
+		items[i].onclick = click;
+	}
+
+</script>
+</html>
