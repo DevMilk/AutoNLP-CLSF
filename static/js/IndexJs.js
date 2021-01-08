@@ -1,27 +1,9 @@
 function getTextInput(){return document.getElementById("input").value;}
-/*
-BOW = 0
-NGRAM = 2
-STYLE = 3
-ALL = 1
-*/
+
 var action = document.getElementById("acts");
 function predLoc(){
 	return document.getElementById("prediction");
 }
-var enums = {
-	"BASIC": "BASIC-BOW",
-	"TF-IDF": "TF-IDF-BOW",
-	"SVC": "SVC",
-	"Random Forest": "RF",
-	"Multinomial Naive Bayes": "MNB",
-	"Logistic Regression": "LR",
-	"ALL IN ONE": "ALL",
-	"XGBoost": "XGB",
-	"Nearest Centroid": "NC",
-	"BOW": null
-
-};
 var desc = {
 	"BOW": "IN THIS MODEL, A TEXT (SUCH AS A SENTENCE OR A DOCUMENT) IS \
 	REPRESENTED AS THE BAG (MULTISET) OF ITS WORDS, DISREGARDING GRAMMAR AND EVEN WORD ORDER BUT KEEPING MULTIPLICITY."
@@ -127,6 +109,7 @@ async function requestToRespondingAction(args){
 		"text": getTextInput(),
 		"args": args,
 	}
+
 	if(endpoint=="train"){
 		currentArgs = args
 		predLoc().innerText = "Enter parameters"
@@ -139,6 +122,7 @@ async function requestToRespondingAction(args){
 		request = {"test_ratio": test_ratio}
 	}
 	endpoint = endpoint.toLowerCase()
+	console.log(request)
 	POST("/"+endpoint,request,function(responseArray){predLoc().innerText=responseArray[0];})
 
 }
@@ -158,6 +142,7 @@ async function elementHiden(element){
 }
 
 let descriptionLoc = document.getElementById("description");
+
 function click(event){
 
 	currentElement = event.target; 
@@ -175,8 +160,7 @@ function click(event){
 	let argsArray = []
 	if(args.length!=0){
 		for(var i = 0;i<args.length;i++){
-			if(enums[args[i]]!=null)
-				argsArray.push(enums[args[i]])
+			argsArray.push(args[i])
 		}
 	}
 

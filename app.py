@@ -1,29 +1,57 @@
 from flask import Flask, jsonify, request
 from flask import render_template
+
+
+
 from .models.model_getter import *
 
-Model_dict = {
-    "BASIC-BOW": {
-        "RF": getBasicBow("RF"),
-        "MNB": getBasicBow("MNB"),
-        "SVC": getBasicBow("SVC"),
-        "NC": getBasicBow("NC"),
-        "XGB": getBasicBow("XGB")
-    },
-    "TF-IDF-BOW": {
-        "RF": getTfidfBow("RF"),
-        "MNB": getTfidfBow("MNB"),
-        "SVC": getTfidfBow("SVC"),
-        "NC": getTfidfBow("NC"),
-        "XGB": getTfidfBow("XGB")
-    },
+shorten = {
+    "Random Forest": "RF",
+    "Multinomial Naive Bayes" : "MNB",
+    "Nearest Centroid": "NC",
+    "XGBoost": "XGB"
 }
+Model_dict = {
+    "BOW":{
+
+        "BASIC": {
+            "RF" : getBasicBow("RF"),
+            "MNB": getBasicBow("MNB"),
+            "SVC": getBasicBow("SVC"),
+            "NC" : getBasicBow("NC"),
+            "XGB": getBasicBow("XGB")
+        },
+        "TF-IDF": {
+            "RF" : getTfidfBow("RF"),
+            "MNB": getTfidfBow("MNB"),
+            "SVC": getTfidfBow("SVC"),
+            "NC" : getTfidfBow("NC"),
+            "XGB": getTfidfBow("XGB")
+        }
+    }
+
+}
+
+TODO: Model_dict'in son değer olmadan olan structure'sini çıkar, Javascript'e aktar, javascript de o structure'yi html olarak üretsin 
 
 app = Flask(__name__, template_folder='templates')
 
 
+def shortenModelName(modelName):
+    try:
+        return shorten[modelName]
+    except:
+        return modelName
+
 def getModelFromDict(args):
-    return Model_dict[args[-1]][args[-2]]
+    for i,arg in enumerate(args):
+        args[i] = shortenModelName(arg)
+
+    model = Model_dict[args[-1]]
+    for arg in args[-2::-1]:
+        model = model[arg]
+    return model 
+
 
 def most_frequent(List): 
     counter = 0
@@ -40,7 +68,7 @@ def most_frequent(List):
 
 def runMethodOfModel(methodName, args,material):
     results = []
-    if(args[-1]=="ALL"):
+    if(args[-1]=="ALL IN ONE"):
         for key in list(Model_dict.keys()):
             for ml_model in list(Model_dict[key].keys()):
                 results.append(getattr(Model_dict[key][ml_model], methodName)(*material))
@@ -53,7 +81,7 @@ def runMethodOfModel(methodName, args,material):
 
 @app.route('/')
 def hello():
-    return render_template("index.html");
+    return render_template("index.html",jsonify(Model_dict));
 
 
 #Make the model predict
