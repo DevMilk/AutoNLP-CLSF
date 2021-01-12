@@ -11,6 +11,20 @@ shorten = {
     "Nearest Centroid": "NC",
     "XGBoost": "XGB"
 }
+
+def simplifyDict(dictionary):
+    if(not isinstance(dictionary, dict)):
+        return 0
+
+    allKeys = []
+    tmp = dictionary
+    for key in list(tmp.keys()):
+        val = simplifyDict(tmp[key])
+
+    return tmp
+
+
+
 Model_dict = {
     "BOW":{
 
@@ -32,9 +46,11 @@ Model_dict = {
 
 }
 
-TODO: Model_dict'in son değer olmadan olan structure'sini çıkar, Javascript'e aktar, javascript de o structure'yi html olarak üretsin 
+#TODO: Model_dict'in son değer olmadan olan structure'sini çıkar, Javascript'e aktar, javascript de o structure'yi html olarak üretsin 
 
 app = Flask(__name__, template_folder='templates')
+
+
 
 
 def shortenModelName(modelName):
