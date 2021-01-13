@@ -1,54 +1,23 @@
-function getTextInput(){return document.getElementById("input").value;}
 
 var action = document.getElementById("acts");
-function predLoc(){
-	return document.getElementById("prediction");
-}
+
 var desc = {
 	"BOW": "IN THIS MODEL, A TEXT (SUCH AS A SENTENCE OR A DOCUMENT) IS \
 	REPRESENTED AS THE BAG (MULTISET) OF ITS WORDS, DISREGARDING GRAMMAR AND EVEN WORD ORDER BUT KEEPING MULTIPLICITY."
 }
 
-function getInput(text,default_val=0.2,min_val=0.01,max_val=0.99){
-	do{
-		var value = prompt(text,default_val);
-		if(value==null)
-		  return
 
-		if (value != parseFloat(value, 10) || value <=min_val || value >=max_val)
-		  alert("0.01 ve 0.99 arasında bir sayı girin.");
-	  
-	}while(value != parseFloat(value, 10) || value <=min_val || value >=max_val);
-
-	return parseFloat(value);
-  
+function deleteParamForm(){
+	if(document.getElementById("form"))
+		document.getElementById("form").remove();
 }
-
-function POST(endpoint, requestBody,handleFunc){
-	const xhr = new XMLHttpRequest();   // new HttpRequest instance 
-	xhr.open("POST", endpoint);
-	xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify(requestBody));
-    xhr.timeout = 60*1000;
-
-    xhr.onreadystatechange = function () {
-      if (this.readyState === 4   && 
-		  this.status     ==  200 &&
-  	      this.status < 300) {
-			  if(this.responseText=="")
-				  return
-			  handleFunc(JSON.parse(this.responseText.replace(/\bNaN\b/g, "null")));
-		  }
-	  else if(this.status==500){
-	  	predLoc().innerText="SERVER ERROR"
-	  }
-    }
-}
-
 function callIfSplit(){
 	let endpoint = document.getElementById("acts").value;
 	if(endpoint=="split")
 		requestToRespondingAction([]);
+	else{
+		deleteParamForm();
+	}
 }
 
 function wait() {
@@ -73,7 +42,7 @@ async function destroyAndReturn(){
 	predLoc().innerText = "Training..."
 	await wait();
 	POST("/train",request,function(responseArray){predLoc().innerText=responseArray[0];})
-	formElement.remove()
+	deleteParamForm();
 }
 
 //Ask for parameters before training

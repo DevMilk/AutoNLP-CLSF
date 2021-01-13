@@ -2,14 +2,16 @@
 <html>
 <head>
 	<title>Turkish Text Categorization</title>
-<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
+	
+	<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/IndexStyle.css') }}">
-			<script type="text/javascript" src="{{ url_for('static', filename='js/IndexJs.js') }}"></script>
+
 
 </head>
 
 <body>
 	<div id="parameters"></div>
+
 	<div id="other">
 		<div id="output">
 			<a id="prediction">Dont forget training model, after splitting the data </a>
@@ -24,7 +26,8 @@
 			    <option value="test">Test</option>
 			    <option value="train">Train</option>
 		 	</select>
-			<nav>
+			<nav id="model-structure">
+<!--
 					<menu>
 
 						<menuitem class="main">
@@ -60,7 +63,7 @@
 
 							</menu>
 						</menuitem>
-					</menu>
+					</menu> -->
 			</nav>
 
 
@@ -68,13 +71,14 @@
 
 	</div>
 </body>
-
-<script type="text/javascript">
-	var items = document.getElementsByTagName("a");
-
-	for(var i=0;i<items.length;i++){
-		items[i].onclick = click;
-	}
-
-</script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/requestFunctions.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/structureBuilder.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/userInput.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/IndexJs.js') }}"></script>
+	<script type="text/javascript">
+		var items = document.getElementsByTagName("a");
+		for(var i=0;i<items.length;i++){
+			items[i].onclick = click;
+		}
+	</script>
 </html>

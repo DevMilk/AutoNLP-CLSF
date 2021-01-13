@@ -148,8 +148,8 @@ nav a:hover:before {
    width:100%;
    height:100%;
 }
-
-nav > menu > menuitem > a + menu:after{
+/*nav > menu > menuitem to menu:nth-child(odd) */
+menu:nth-child(odd) > a + menu:after{
    content: '';
    position:absolute;
    border:10px solid transparent;

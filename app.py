@@ -17,52 +17,56 @@ def simplifyDict(dictionary):
         return 0
 
     allKeys = []
-    tmp = dictionary
+    tmp = dictionary.copy()
     for key in list(tmp.keys()):
-        val = simplifyDict(tmp[key])
+        tmp[key] = simplifyDict(tmp[key])
 
     return tmp
 
 
+"""Model_dict = {
+    "BOW":{
 
+        "BASIC": {
+            "Random Forest" : getBasicBow("RF"),
+            "Multinomial Naive Bayes": getBasicBow("MNB"),
+            "SVC": getBasicBow("SVC"),
+            "Nearest Centroid" : getBasicBow("NC"),
+            "XGBoost": getBasicBow("XGB")
+        },
+        "TF-IDF": {
+            "Random Forest" : getTfidfBow("RF"),
+            "Multinomial Naive Bayes": getTfidfBow("MNB"),
+            "SVC": getTfidfBow("SVC"),
+            "Nearest Centroid" : getTfidfBow("NC"),
+            "XGBoost": getTfidfBow("XGB")
+        }
+    }
+
+}"""
+
+#For Test
 Model_dict = {
     "BOW":{
 
         "BASIC": {
-            "RF" : getBasicBow("RF"),
-            "MNB": getBasicBow("MNB"),
-            "SVC": getBasicBow("SVC"),
-            "NC" : getBasicBow("NC"),
-            "XGB": getBasicBow("XGB")
+            "Random Forest" : getBasicBow("RF"),
+            "Multinomial Naive Bayes": getBasicBow("MNB"),
         },
         "TF-IDF": {
-            "RF" : getTfidfBow("RF"),
-            "MNB": getTfidfBow("MNB"),
-            "SVC": getTfidfBow("SVC"),
-            "NC" : getTfidfBow("NC"),
-            "XGB": getTfidfBow("XGB")
+            "Random Forest" : getTfidfBow("RF"),
+            "Multinomial Naive Bayes": getTfidfBow("MNB"),
         }
     }
 
 }
-
-#TODO: Model_dict'in son değer olmadan olan structure'sini çıkar, Javascript'e aktar, javascript de o structure'yi html olarak üretsin 
 
 app = Flask(__name__, template_folder='templates')
 
 
 
 
-def shortenModelName(modelName):
-    try:
-        return shorten[modelName]
-    except:
-        return modelName
-
 def getModelFromDict(args):
-    for i,arg in enumerate(args):
-        args[i] = shortenModelName(arg)
-
     model = Model_dict[args[-1]]
     for arg in args[-2::-1]:
         model = model[arg]
@@ -97,8 +101,12 @@ def runMethodOfModel(methodName, args,material):
 
 @app.route('/')
 def hello():
-    return render_template("index.html",jsonify(Model_dict));
+    return render_template("index.html");
 
+@app.route('/structure')
+def getStructure():
+    print(simplifyDict(Model_dict))
+    return jsonify(simplifyDict(Model_dict))
 
 #Make the model predict
 
