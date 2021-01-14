@@ -3,7 +3,7 @@ function POST(endpoint, requestBody,handleFunc){
 	xhr.open("POST", endpoint);
 	xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(requestBody));
-    xhr.timeout = 60*1000;
+    xhr.timeout = 0;
 
     xhr.onreadystatechange = function () {
       if (this.readyState === 4   && 

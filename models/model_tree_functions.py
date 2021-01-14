@@ -19,15 +19,35 @@ def most_frequent(List):
   
     return num 
 
+#Get simplified tree
+def runMethodForAll(methodName,material,model_tree=model_tree):
+    if(not isinstance(model_tree, dict) and not isinstance(model_tree, str)):
+            return getattr(model_tree,methodName)(*material)
+
+    allResults = []
+    tmp = model_tree.copy()
+    for key in list(tmp.keys()):
+
+        if(key=="DESC"):
+            continue
+
+        newResult = runMethodForAll(methodName,material,model_tree=tmp[key])
+
+        try:
+            allResults += newResult
+        except:
+            allResults.append(newResult)
+
+    return allResults
+
 
 #Run method of model
 def runMethodOfModel(methodName, args,material,model_tree=model_tree):
     results = []
     if(args[-1]=="ALL IN ONE"):
-        for key in list(model_tree.keys()):
-            for ml_model in list(model_tree[key].keys()):
-                results.append(getattr(model_tree[key][ml_model], methodName)(*material))
-        results = [most_frequent(results)]
+        results = runMethodForAll(methodName,material)
+        if(not isinstance(results,str)):
+            results = [most_frequent(results)]
     else:
         model =  getModelFromTree(args)
         results.append(getattr(model,methodName)(*material))

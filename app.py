@@ -6,7 +6,7 @@ from .models.model_tree_functions import *
 app = Flask(__name__, template_folder='templates')
 
 X_train,X_test,y_train,y_test,cleaned_data = defineData(data_path)
-
+#TODO: SÜRÜKLE BIRAK DATASET
 #------------------------------Page Endpoints----------------------------
 
 
@@ -75,7 +75,8 @@ def train():
         parameters = request.get_json()
         args = parameters.get("args")
         params = parameters.get("params") #must be a dict
-        runMethodOfModel("set_params_of_model",args,[(params)])
+        if(params!=None):
+            runMethodOfModel("set_params_of_model",args,[(params)])
         runMethodOfModel("fit",args,(X_train,y_train))
         return jsonify(["Training Success"])
     except Exception as e:

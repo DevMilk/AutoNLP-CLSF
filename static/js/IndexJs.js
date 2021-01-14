@@ -74,7 +74,7 @@ async function requestToRespondingAction(args){
 		"args": args,
 	}
 
-	if(endpoint=="train"){
+	if(endpoint=="train" && args[0]!="ALL IN ONE"){
 		currentArgs = args
 		predLoc().innerText = "Enter parameters"
 		await wait();
@@ -134,8 +134,9 @@ function click(event){
 	}
 	let desc = ""
 	for(var i = args.length-1;i>=0;i--){
-			console.log(node,args[i])
 			node = node[args[i]]
+			if(typeof node == "undefined")
+				continue
 			desc = node["DESC"] ? node["DESC"] : desc;
 	}
 	
