@@ -1,12 +1,13 @@
-let model_tree = GET("/structure");
-const ground = document.getElementById("model-structure");
+let model_tree = GET("/model-tree");
+const ground = document.getElementById("model-tree");
 
 function createMenu(content,isMain=false){
 	let subMenu = '<menu>';
 	subMenu += isMain==true ? '<menuitem class="main"><a>ALL IN ONE</a></menuitem>' : '';
 
 	for (let subModel in content){
-		subMenu += createModelTree(subModel,content[subModel])
+		if(subModel!="DESC")
+			subMenu += createModelTree(subModel,content[subModel])
 	}
 	subMenu+='</menu>'
 	return subMenu;

@@ -39,20 +39,6 @@ body{
 	width: -webkit-fill-available;
 }
 
-.center{
-	display: grid;
-	grid-gap: 6vh;
-	justify-content: center;
-	align-content: center;
-	align-items: center;
-	vertical-align: center;
-	width: min-content; 
-	position: absolute;
-	margin-left: 60vw;
-	margin-top: 30vh;
-	margin-bottom:40vh;
-
-}
 
 #input{
 	width: 10vw;
@@ -213,9 +199,26 @@ menuitem{
 	width: 6vw; 
 	position: absolute;
 	font-size: xx-large;
-	margin-left: 30vw;
+	margin-left: 32vw;
 	margin-top: 30vh;
+}
+
+
+.center{
+  display: grid;
+  grid-gap: 6vh;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  vertical-align: center;
+  width: min-content; 
+  position: absolute;
+  margin-left: 52vw;
+  margin-top: 30vh;
+  margin-bottom:40vh;
+
 }
 #description{
 	width: 30vw;
+  overflow-wrap: break-word;
 }

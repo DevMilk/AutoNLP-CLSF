@@ -1,17 +1,11 @@
 
 var action = document.getElementById("acts");
 
-var desc = {
-	"BOW": "IN THIS MODEL, A TEXT (SUCH AS A SENTENCE OR A DOCUMENT) IS \
-	REPRESENTED AS THE BAG (MULTISET) OF ITS WORDS, DISREGARDING GRAMMAR AND EVEN WORD ORDER BUT KEEPING MULTIPLICITY."
-}
-
-
 function deleteParamForm(){
 	if(document.getElementById("form"))
 		document.getElementById("form").remove();
 }
-function callIfSplit(){
+function callOnMethodChange(){
 	let endpoint = document.getElementById("acts").value;
 	if(endpoint=="split")
 		requestToRespondingAction([]);
@@ -26,6 +20,9 @@ function wait() {
   });
 }
 
+function writeToPredictionElement(responseArray){
+	predLoc().innerText=responseArray[0].toUpperCase();
+}
 var currentArgs;
 async function destroyAndReturn(){
 
@@ -35,19 +32,20 @@ async function destroyAndReturn(){
 	let inputs = formElement.getElementsByTagName("input");
 	let obj = {}
 	for(let i=0;i<inputs.length;i++)
-		if(inputs[i].value!="null")
-			obj[inputs[i].name] = parseFloat(inputs[i].value)
+		if(inputs[i].value!="null"){
+			let parsed = parseFloat(inputs[i].value); 
+			obj[inputs[i].name] = isNaN(parsed) ? inputs[i].value  : parsed;
+		}
 	request["params"] = obj;
 
 	predLoc().innerText = "Training..."
 	await wait();
-	POST("/train",request,function(responseArray){predLoc().innerText=responseArray[0];})
+	POST("/train",request,writeToPredictionElement)
 	deleteParamForm();
 }
 
 //Ask for parameters before training
 function askForParams(paramSet){
-
 	let currentParams = paramSet[0]
 
 	function createInput(name,value){
@@ -58,7 +56,6 @@ function askForParams(paramSet){
 	let start = '<div id="form" >';
 	let end = '<button onclick="destroyAndReturn();">send</button> </div>';
 	for(let key in currentParams) 
-		if(parseFloat(currentParams[key])|| currentParams[key]==0)
   			start+=createInput(key,currentParams[key]);
 	
 	start+=end;
@@ -71,8 +68,6 @@ async function requestToRespondingAction(args){
 
 
 	let endpoint = document.getElementById("acts").value;
-	predLoc().innerText = (endpoint+"ing...").toUpperCase()
-	await wait();
 
 	let request = {
 		"text": getTextInput(),
@@ -88,11 +83,15 @@ async function requestToRespondingAction(args){
 	}
 	if(endpoint=="split"){
 		test_ratio = getInput("Enter test ratio");
+		if(test_ratio==null || test_ratio ==="undefined")
+			return
 		request = {"test_ratio": test_ratio}
 	}
+
+	predLoc().innerText = (endpoint+"ing...").toUpperCase()
+	await wait();
 	endpoint = endpoint.toLowerCase()
-	console.log(request)
-	POST("/"+endpoint,request,function(responseArray){predLoc().innerText=responseArray[0];})
+	POST("/"+endpoint,request,writeToPredictionElement)
 
 }
 
@@ -110,7 +109,6 @@ async function elementHiden(element){
 	await wait();
 }
 
-let descriptionLoc = document.getElementById("description");
 
 function click(event){
 
@@ -127,12 +125,21 @@ function click(event){
 
 
 	let argsArray = []
+	let node = JSON.parse(JSON.stringify(model_tree))
 	if(args.length!=0){
 		for(var i = 0;i<args.length;i++){
 			argsArray.push(args[i])
+
 		}
 	}
-
+	let desc = ""
+	for(var i = args.length-1;i>=0;i--){
+			console.log(node,args[i])
+			node = node[args[i]]
+			desc = node["DESC"] ? node["DESC"] : desc;
+	}
+	
+	document.getElementById("description").innerText = desc;
 
 	requestToRespondingAction(argsArray);
 
