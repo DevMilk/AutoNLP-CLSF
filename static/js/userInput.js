@@ -26,7 +26,5 @@ function handleDrop(event){
 	document.getElementById("myDropzone").style.zIndex="-1";
 	document.getElementById("myDropzone").style.opacity="0";
 }
-document.getElementById("myDropzone").addEventListener('ondragstart', handleDrag);
-document.getElementById("myDropzone").addEventListener('drag', handleDrag);
 document.getElementById("myDropzone").addEventListener('ondragend', handleDrop);
 document.getElementById("myDropzone").addEventListener('drop', handleDrop);

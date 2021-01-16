@@ -37,6 +37,7 @@ html{
 body{
 	height: -webkit-fill-available;
 	width: -webkit-fill-available;
+  overflow: hidden;
 }
 
 

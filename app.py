@@ -1,13 +1,15 @@
-from flask import Flask, jsonify, request, render_template,session
+from flask import Flask, jsonify, request, render_template
 from flask_dropzone import Dropzone
 from io import StringIO
-
-
+import pickle 
 from .models.model_tree_functions import *
 import os
-app = Flask(__name__, template_folder='templates')
+from flask_session import Session
 
-X_train,X_test,y_train,y_test,cleaned_data = defineData(data_path)
+app = Flask(__name__, template_folder='templates')
+session =  Session(app)
+
+
 
 # Dropzone settings
 app.config['DROPZONE_UPLOAD_MULTIPLE'] = True
@@ -18,7 +20,7 @@ app.secret_key = "super secret key"
 
 dropzone = Dropzone(app)
 
-model_tree = buildTreeByParamTree(param_tree)
+
 #------------------------------Page Endpoints----------------------------
 
 
@@ -31,7 +33,12 @@ def hello():
 #Get model tree
 @app.route('/model-tree')
 def getStructure():
-    return jsonify(simplifyTree(model_tree))
+    try:
+        session.model_tree
+    except:
+        session.X_train,session.X_test,session.y_train,session.y_test,session.cleaned_data = defineData(data_path)
+        session.model_tree = buildTreeByParamTree(param_tree)
+    return jsonify(simplifyTree(session.model_tree))
 
 #------------------------------METHOD ENDPOINTS----------------------------
 
@@ -41,7 +48,7 @@ def getStructure():
 def get_param(): 
     parameters = request.get_json()
     args = parameters.get("args")
-    return jsonify(runMethodOfModel("get_params", args,(0,0),model_tree))
+    return jsonify(runMethodOfModel("get_params", args,(0,0),session.model_tree))
 
 
 #Split Dataset
@@ -50,7 +57,7 @@ def change_split():
     try:
         parameters = request.get_json()
         test_ratio = parameters.get("test_ratio")
-        X_train, X_test, y_train, y_test = get_train_test_dataset(cleaned_data,test_ratio)
+        session.X_train, session.X_test, session.y_train, session.y_test = get_train_test_dataset(session.cleaned_data,test_ratio)
         return jsonify(["Data Splitted with {} test data ratio".format(test_ratio)])
     except Exception as e:
         print(e)
@@ -64,8 +71,9 @@ def predict():
         parameters = request.get_json()
         text = parameters.get("text")
         args = parameters.get("args")
-        return jsonify(runMethodOfModel("predict",args,[text],model_tree))
-    except:
+        return jsonify(runMethodOfModel("predict",args,[text],session.model_tree))
+    except Exception as e:
+        print("Error "+str(e))
         return jsonify(["Model Not Trained"])
 
 
@@ -75,7 +83,7 @@ def test():
     parameters = request.get_json()
     args = parameters.get("args")
     try:
-        return jsonify(runMethodOfModel("evaluate", args, (X_test,y_test),model_tree))
+        return jsonify(runMethodOfModel("evaluate", args, (session.X_test,session.y_test),session.model_tree))
     except:
         return jsonify(["Model Not Trained"])
 
@@ -88,8 +96,8 @@ def train():
         args = parameters.get("args")
         params = parameters.get("params") #must be a dict
         if(params!=None):
-            runMethodOfModel("set_params_of_model",args,[(params)],model_tree)
-        runMethodOfModel("fit",args,(X_train,y_train),model_tree)
+            runMethodOfModel("set_params_of_model",args,[(params)],session.model_tree)
+        runMethodOfModel("fit",args,(session.X_train,session.y_train),session.model_tree)
         return jsonify(["Training Success"])
     except Exception as e:
         print(e)
@@ -98,12 +106,11 @@ def train():
 
 @app.route('/setDataset', methods= ["POST"])
 def setDataset():
-    global X_train,X_test,y_train,y_test,cleaned_data
     try:
         print("uploading...")
         if request.method == 'POST':
             data_file = request.files.get("file[0]")
-            X_train,X_test,y_train,y_test,cleaned_data = defineData(StringIO(data_file.read().decode("utf-8")))
+            session.X_train,session.X_test,session.y_train,session.y_test,session.cleaned_data = defineData(StringIO(data_file.read().decode("utf-8")))
             
             """session["cleaned_data"] = cleaned_data;
             session["X_train"] = X_train
