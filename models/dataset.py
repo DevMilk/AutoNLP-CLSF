@@ -2,7 +2,7 @@ from .preprocessing import clean_text
 from sklearn.model_selection import train_test_split
 
 
-def read_original_data(data):
+def clean_data(data):
     cleaned_data = data.copy()
     cleaned_data["text"] = data["text"].apply(lambda x: clean_text(x, remove_whitespaces=False))
     return cleaned_data

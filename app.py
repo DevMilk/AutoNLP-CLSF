@@ -1,20 +1,32 @@
-from flask import Flask, jsonify, request
-from flask import render_template
+from flask import Flask, jsonify, request, render_template,session
+from flask_dropzone import Dropzone
+from io import StringIO
+
+
 from .models.model_tree_functions import *
-
-
+import os
 app = Flask(__name__, template_folder='templates')
 
 X_train,X_test,y_train,y_test,cleaned_data = defineData(data_path)
-#TODO: SÜRÜKLE BIRAK DATASET
+
+# Dropzone settings
+app.config['DROPZONE_UPLOAD_MULTIPLE'] = True
+app.config['DROPZONE_MAX_FILE_SIZE'] = 1024
+app.config['DROPZONE_ALLOWED_FILE_CUSTOM'] = True
+app.config['DROPZONE_ALLOWED_FILE_TYPE'] = '.csv, .xlsx, .xls'
+app.secret_key = "super secret key"
+
+dropzone = Dropzone(app)
+# enable CSRF protection
+
+#TODO: Şu drag ve dropdaki bugu kaldır, dataset değişimi başarılı olursa bildirme olayını yap
 #------------------------------Page Endpoints----------------------------
 
 
 #Index page
 @app.route('/', methods= ["GET"])
 def hello():
-    return render_template("index.html",properties =app_properties);
-
+    return render_template("index.html", properties=app_properties);
 
 
 #Get model tree
@@ -50,13 +62,14 @@ def change_split():
 #Make the model predict
 @app.route('/predict', methods= ["POST"])
 def predict():
-    parameters = request.get_json()
-    text = parameters.get("text")
-    args = parameters.get("args")
     try:
+        parameters = request.get_json()
+        text = parameters.get("text")
+        args = parameters.get("args")
         return jsonify(runMethodOfModel("predict",args,[text]))
     except:
         return jsonify(["Model Not Trained"])
+
 
 #Test the current model and return test accuracy
 @app.route('/test', methods= ["POST"])
@@ -67,6 +80,7 @@ def test():
         return jsonify(runMethodOfModel("evaluate", args, (X_test,y_test)))
     except:
         return jsonify(["Model Not Trained"])
+
 
 #Train the current model and return train accuracy
 @app.route('/train', methods= ["POST"])
@@ -82,6 +96,21 @@ def train():
     except Exception as e:
         print(e)
         return jsonify(["ERROR ON TRAINING"])
+
+
+@app.route('/setDataset', methods= ["POST"])
+def setDataset():
+    try:
+        print("uploading...")
+        if request.method == 'POST':
+            data_file = request.files.get("file[0]")
+            X_train,X_test,y_train,y_test,cleaned_data = defineData(StringIO(data_file.read().decode("utf-8")))
+        #cleaned_data = cleanAndSplit(csv_file)
+        return jsonify(["UPLOAD SUCCESSFULL"])
+    except Exception as e:
+        print("Error "+str(e))
+        return jsonify(["UPLOAD FAILED"])
+
 
 #--------------------------------------------------------------------------
 

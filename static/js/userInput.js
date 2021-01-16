@@ -16,3 +16,17 @@ function getInput(text,default_val=0.2,min_val=0.01,max_val=0.99){
 	return parseFloat(value);
   
 }
+
+function handleDrag(event){
+	event.preventDefault();
+	document.getElementById("myDropzone").style.zIndex="100";
+	document.getElementById("myDropzone").style.opacity="0.5";
+}
+function handleDrop(event){
+	document.getElementById("myDropzone").style.zIndex="-1";
+	document.getElementById("myDropzone").style.opacity="0";
+}
+document.getElementById("myDropzone").addEventListener('ondragstart', handleDrag);
+document.getElementById("myDropzone").addEventListener('drag', handleDrag);
+document.getElementById("myDropzone").addEventListener('ondragend', handleDrop);
+document.getElementById("myDropzone").addEventListener('drop', handleDrop);

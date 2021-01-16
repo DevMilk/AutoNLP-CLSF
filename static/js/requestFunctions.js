@@ -1,6 +1,7 @@
 function POST(endpoint, requestBody,handleFunc){
 	const xhr = new XMLHttpRequest();   // new HttpRequest instance 
 	xhr.open("POST", endpoint);
+	xhr.withCredentials = true;
 	xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send(JSON.stringify(requestBody));
     xhr.timeout = 0;

@@ -2,14 +2,49 @@
 <html>
 <head>
 	<title>{{properties.title}}</title>
-	
+	{{ dropzone.load_css() }}
+
+
 	<link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet'>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/IndexStyle.css') }}">
 
 
 </head>
 
-<body>
+<body ondragover="handleDrag(event);" ondragexit="handleDrop(event);">
+
+
+	{{ dropzone.load_js() }}
+	{{ dropzone.create(action='setDataset') }}
+	{{ dropzone.config(custom_config="clickable:false") }}
+
+	{{ 
+
+		dropzone.style(
+						'	
+							position: fixed;
+						    height: 100vh;
+						    width: 100vw;
+						    z-index: -1;
+						    margin: 0;
+						    padding: 0;
+						    opacity:0;
+						    transition: .5s all;
+	    				'
+					  ) 
+	}}
+
+	<script type="text/javascript">
+		Dropzone.options.myDropzone.success= function(file, response){
+			response[0] += ": "+file.name
+			writeToPredictionElement(response)
+   	  	 };
+   	  	 Dropzone.options.myDropzone.sending= async function(){
+   	  	 	predLoc().innerText = "Uploading..."
+			await wait();
+   	  	 };
+	</script>
+	
 	<div id="parameters"></div>
 
 	<div id="other">
