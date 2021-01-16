@@ -15,7 +15,7 @@ function POST(endpoint, requestBody,handleFunc){
 			  handleFunc(JSON.parse(this.responseText.replace(/\bNaN\b/g, "null")));
 		  }
 	  else if(this.status==500){
-	  	predLoc().innerText="SERVER ERROR"
+	  	writeToPredictionElement("Server error");
 	  }
     }
 }

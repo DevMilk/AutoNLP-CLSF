@@ -1,6 +1,6 @@
 from .model_tree import *
 #Get Model from dictionary by args
-def getModelFromTree(args,model_tree=model_tree):
+def getModelFromTree(args,model_tree):
     model = model_tree[args[-1]]
     for arg in args[-2::-1]:
         model = model[arg]
@@ -20,7 +20,7 @@ def most_frequent(List):
     return num 
 
 #Get simplified tree
-def runMethodForAll(methodName,material,model_tree=model_tree):
+def runMethodForAll(methodName,material,model_tree):
     if(not isinstance(model_tree, dict) and not isinstance(model_tree, str)):
             return getattr(model_tree,methodName)(*material)
 
@@ -42,20 +42,20 @@ def runMethodForAll(methodName,material,model_tree=model_tree):
 
 
 #Run method of model
-def runMethodOfModel(methodName, args,material,model_tree=model_tree):
+def runMethodOfModel(methodName, args,material,model_tree):
     results = []
     if(args[-1]=="ALL IN ONE"):
         results = runMethodForAll(methodName,material)
         if(not isinstance(results,str)):
             results = [most_frequent(results)]
     else:
-        model =  getModelFromTree(args)
+        model =  getModelFromTree(args,model_tree)
         results.append(getattr(model,methodName)(*material))
 
     return results
 
 #Get simplified tree
-def simplifyTree(model_tree=model_tree):
+def simplifyTree(model_tree):
     if(not isinstance(model_tree, dict)):
         if(not isinstance(model_tree, str)):
             return 0

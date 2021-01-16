@@ -11,26 +11,36 @@ app_properties = {
 }
 
 
-model_tree = {
+param_tree = {
     "BOW":{
 
         "DESC": "Bag Of Words transforms texts to represent them as term count vector.",
         
         "BASIC": {
-            "Random Forest" : getBasicBow("RF"),
-            "Multinomial Naive Bayes": getBasicBow("MNB"),
-            "SVC": getBasicBow("SVC"),
-            "Nearest Centroid" : getBasicBow("NC"),
-            "XGBoost": getBasicBow("XGB")
+            "Random Forest" : 
+                (Direct_BOW_Model,("RF")),
+            "Multinomial Naive Bayes": 
+                (Direct_BOW_Model,("MNB")),
+            "SVC": 
+                (Direct_BOW_Model,("SVC")),
+            "Nearest Centroid" : 
+                (Direct_BOW_Model,("NC")),
+            "XGBoost": 
+                (Direct_BOW_Model,("XGB")),
         },
         "TF-IDF": {
             "DESC": "TF-IDF combined by Bag Of Words takes term popularity into account.",
 
-            "Random Forest" : getTfidfBow("RF"),
-            "Multinomial Naive Bayes": getTfidfBow("MNB"),
-            "SVC": getTfidfBow("SVC"),
-            "Nearest Centroid" : getTfidfBow("NC"),
-            "XGBoost": getTfidfBow("XGB")
+            "Random Forest" :  
+                (TfIdf_BOW_Model,("RF")),
+            "Multinomial Naive Bayes": 
+                (TfIdf_BOW_Model,("MNB")),
+            "SVC": 
+                (TfIdf_BOW_Model,("SVC")),
+            "Nearest Centroid" : 
+                (TfIdf_BOW_Model,("NC")),
+            "XGBoost": 
+                (TfIdf_BOW_Model,("XGB")),
         }
     }
 

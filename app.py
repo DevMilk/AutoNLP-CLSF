@@ -18,6 +18,7 @@ app.secret_key = "super secret key"
 
 dropzone = Dropzone(app)
 
+model_tree = buildTreeByParamTree(param_tree)
 #------------------------------Page Endpoints----------------------------
 
 
@@ -30,8 +31,7 @@ def hello():
 #Get model tree
 @app.route('/model-tree')
 def getStructure():
-    return jsonify(simplifyTree())
-
+    return jsonify(simplifyTree(model_tree))
 
 #------------------------------METHOD ENDPOINTS----------------------------
 
@@ -41,7 +41,7 @@ def getStructure():
 def get_param(): 
     parameters = request.get_json()
     args = parameters.get("args")
-    return jsonify(runMethodOfModel("get_params", args,(0,0)))
+    return jsonify(runMethodOfModel("get_params", args,(0,0),model_tree))
 
 
 #Split Dataset
@@ -64,7 +64,7 @@ def predict():
         parameters = request.get_json()
         text = parameters.get("text")
         args = parameters.get("args")
-        return jsonify(runMethodOfModel("predict",args,[text]))
+        return jsonify(runMethodOfModel("predict",args,[text],model_tree))
     except:
         return jsonify(["Model Not Trained"])
 
@@ -75,7 +75,7 @@ def test():
     parameters = request.get_json()
     args = parameters.get("args")
     try:
-        return jsonify(runMethodOfModel("evaluate", args, (X_test,y_test)))
+        return jsonify(runMethodOfModel("evaluate", args, (X_test,y_test),model_tree))
     except:
         return jsonify(["Model Not Trained"])
 
@@ -88,8 +88,8 @@ def train():
         args = parameters.get("args")
         params = parameters.get("params") #must be a dict
         if(params!=None):
-            runMethodOfModel("set_params_of_model",args,[(params)])
-        runMethodOfModel("fit",args,(X_train,y_train))
+            runMethodOfModel("set_params_of_model",args,[(params)],model_tree)
+        runMethodOfModel("fit",args,(X_train,y_train),model_tree)
         return jsonify(["Training Success"])
     except Exception as e:
         print(e)
@@ -104,6 +104,13 @@ def setDataset():
         if request.method == 'POST':
             data_file = request.files.get("file[0]")
             X_train,X_test,y_train,y_test,cleaned_data = defineData(StringIO(data_file.read().decode("utf-8")))
+            
+            """session["cleaned_data"] = cleaned_data;
+            session["X_train"] = X_train
+            session["X_test"] = X_test
+            session["y_train"] = y_train
+            session["y_test"] = y_test"""
+
         #cleaned_data = cleanAndSplit(csv_file)
         return jsonify(["UPLOAD SUCCESSFULL"])
     except Exception as e:

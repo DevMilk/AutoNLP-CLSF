@@ -1,10 +1,11 @@
 
-var action = document.getElementById("acts");
-
+//Delete param form
 function deleteParamForm(){
 	if(document.getElementById("form"))
 		document.getElementById("form").remove();
 }
+
+//function to call when another method selected
 function callOnMethodChange(){
 	let endpoint = document.getElementById("acts").value;
 	if(endpoint=="split")
@@ -14,57 +15,67 @@ function callOnMethodChange(){
 	}
 }
 
+//resolve changes
 function wait() {
   return new Promise(resolve => {
     resolve();
   });
 }
 
-function writeToPredictionElement(responseArray){
-	predLoc().innerText=responseArray[0].toUpperCase();
+//write results to prediction element
+async function writeToPredictionElement(responseArray){
+	if(Array.isArray(responseArray))
+		responseArray = responseArray[0]
+	predLoc().innerText=responseArray.toUpperCase();
+	await wait();
 }
-var currentArgs;
-async function destroyAndReturn(){
 
+
+var currentArgs;
+function destroyAndReturn(){
 
 	request = {"args": currentArgs,"params":null}
-	let formElement = document.getElementById("form");
-	let inputs = formElement.getElementsByTagName("input");
+	let inputs = document.getElementById("form").getElementsByTagName("input");
 	let obj = {}
 	for(let i=0;i<inputs.length;i++)
 		if(inputs[i].value!="null"){
 			let parsed = parseFloat(inputs[i].value); 
 			obj[inputs[i].name] = isNaN(parsed) ? inputs[i].value  : parsed;
 		}
-	request["params"] = obj;
 
-	predLoc().innerText = "Training..."
-	await wait();
+	request["params"] = obj;
+	writeToPredictionElement("Training...")
 	POST("/train",request,writeToPredictionElement)
 	deleteParamForm();
 }
 
 //Ask for parameters before training
 function askForParams(paramSet){
+
+	//get params of selected model
 	let currentParams = paramSet[0]
 
+	//Input Form Builder
 	function createInput(name,value){
 		return '<label for="'+name+'">'+name+'</label><br> \
     	<input type="text" id="'+name+'" name="'+name+'" value = "'+value+'"><br> '
 	}
 
+	//Build form
 	let start = '<div id="form" >';
 	let end = '<button onclick="destroyAndReturn();">send</button> </div>';
 	for(let key in currentParams) 
   			start+=createInput(key,currentParams[key]);
 	
 	start+=end;
+
+	//Append form to element
 	document.getElementById("parameters").innerHTML =start;
 	document.getElementById("form").focus();
 }
 
 
-async function requestToRespondingAction(args){
+function requestToRespondingAction(args){
 
 
 	let endpoint = document.getElementById("acts").value;
@@ -76,20 +87,20 @@ async function requestToRespondingAction(args){
 
 	if(endpoint=="train" && args[0]!="ALL IN ONE"){
 		currentArgs = args
-		predLoc().innerText = "Enter parameters"
-		await wait();
+		writeToPredictionElement("Enter parameters")
 		POST("/"+"param",request,askForParams)
 		return;
 	}
 	if(endpoint=="split"){
 		test_ratio = getInput("Enter test ratio");
-		if(test_ratio==null || test_ratio ==="undefined")
+
+		//If input window closes, return
+		if(test_ratio==null || test_ratio === "undefined")
 			return
 		request = {"test_ratio": test_ratio}
 	}
 
-	predLoc().innerText = (endpoint+"ing...").toUpperCase()
-	await wait();
+	writeToPredictionElement(endpoint+"ing...")
 	endpoint = endpoint.toLowerCase()
 	POST("/"+endpoint,request,writeToPredictionElement)
 
@@ -98,24 +109,20 @@ async function requestToRespondingAction(args){
 function getArgFromElement(element){
 	return element.innerText.split("\n")[0];
 }
-function getTag(element){
-	return element.getElementsByTagName("a")[0];
-}
 function getParent(element){
 	return element.parentNode;
 }
-async function elementHiden(element){
-	element.style.visibility = element.style.visibility == "hidden" ? "visible": "hidden";
-	await wait();
+
+function copyObject(objectToCopy){
+	return JSON.parse(JSON.stringify(objectToCopy));
 }
-
-
 function click(event){
 
 	currentElement = event.target; 
 	current =  getArgFromElement(currentElement);
 	args = [current];
 
+	//Reverse pathfinding to extract model argument tree
 	while(current!="ALL IN ONE" && currentElement!=null){
 		if(currentElement.tagName=="MENUITEM" && !args.includes(current))
 			args.push(current);
@@ -123,16 +130,8 @@ function click(event){
 		current = getArgFromElement(currentElement);
 	}
 
-
-	let argsArray = []
-	let node = JSON.parse(JSON.stringify(model_tree))
-	if(args.length!=0){
-		for(var i = 0;i<args.length;i++){
-			argsArray.push(args[i])
-
-		}
-	}
 	let desc = ""
+	let node = copyObject(model_tree)
 	for(var i = args.length-1;i>=0;i--){
 			node = node[args[i]]
 			if(typeof node == "undefined")
@@ -142,9 +141,7 @@ function click(event){
 	
 	document.getElementById("description").innerText = desc;
 
-	requestToRespondingAction(argsArray);
-
-
+	requestToRespondingAction(args);
 
 }
 
