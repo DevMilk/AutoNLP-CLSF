@@ -17,9 +17,7 @@ app.config['DROPZONE_ALLOWED_FILE_TYPE'] = '.csv, .xlsx, .xls'
 app.secret_key = "super secret key"
 
 dropzone = Dropzone(app)
-# enable CSRF protection
 
-#TODO: Şu drag ve dropdaki bugu kaldır, dataset değişimi başarılı olursa bildirme olayını yap
 #------------------------------Page Endpoints----------------------------
 
 
@@ -100,6 +98,7 @@ def train():
 
 @app.route('/setDataset', methods= ["POST"])
 def setDataset():
+    global X_train,X_test,y_train,y_test,cleaned_data
     try:
         print("uploading...")
         if request.method == 'POST':
