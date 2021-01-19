@@ -70,7 +70,9 @@ function askForParams(paramSet){
 	start+=end;
 
 	//Append form to element
-	document.getElementById("parameters").innerHTML =start;
+	document.getElementById("prediction").innerText = "";
+	document.getElementById("description").innerText = "";
+	document.getElementById("prediction").innerHTML +=start;
 	document.getElementById("form").focus();
 }
 
@@ -87,7 +89,8 @@ function requestToRespondingAction(args){
 
 	if(endpoint=="train" && args[0]!="ALL IN ONE"){
 		currentArgs = args
-		writeToPredictionElement("Enter parameters")
+		if(document.getElementById("acts").value!="train")
+			writeToPredictionElement("Enter parameters")
 		POST("/"+"param",request,askForParams)
 		return;
 	}
@@ -139,7 +142,8 @@ function click(event){
 			desc = node["DESC"] ? node["DESC"] : desc;
 	}
 	
-	document.getElementById("description").innerText = desc;
+	if(document.getElementById("acts").value!="train")
+		document.getElementById("description").innerText = desc;
 
 	requestToRespondingAction(args);
 

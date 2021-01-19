@@ -2,23 +2,43 @@
   edgeSize: 1vw;
 }
 #form{
-  position: fixed;
-  height: max-content;
+  max-height: 30vh;
   width: max-content;
-  margin-top: 10px;
-  left: 40%;
-  margin-top: 2vh;
   background: #7755ff;
-  border-radius: 6px;
+  border-radius: 15px;
   color: white;
   border: 2px solid #ffffff;
-  max-height: 20vh;
   overflow-y: scroll;
-
+  text-align: center;
+  transition: all .5s;
+  box-shadow: 0px 0px 50px 7px #7755ff;
+  animation: get-created 1s ease;
 }
-label, button{
+@keyframes get-created {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+#form > button{
+  margin: 10px;
+  background: black;
+  border-radius: 10px;
+  border: 1px ridge black;
+  cursor: pointer;
+}
+#form > *{
+  margin: 10px;
+}
+label, button, input{
   font-family: 'Abel';
   font-size: x-large;
+
+}
+label,button{
+
   font-variant: all-small-caps;
 }
 button{
