@@ -22,10 +22,13 @@
         opacity: 1;
     }
 }
-#form > button{
-  margin: 10px;
-  background: black;
+#form > button,#form > input{
   border-radius: 10px;
+  font-variant: all-small-caps;
+
+}
+#form > button{
+  background: black;
   border: 1px ridge black;
   cursor: pointer;
 }
@@ -37,12 +40,7 @@ label, button, input{
   font-size: x-large;
 
 }
-label,button{
-
-  font-variant: all-small-caps;
-}
 button{
-  background: white;
   padding: 4px !important;
   color: #7755ff;
 }

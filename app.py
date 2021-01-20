@@ -5,19 +5,24 @@ import pickle
 from .models.model_tree_functions import *
 import os
 from flask_session import Session
+from flask_caching import Cache
 
 app = Flask(__name__, template_folder='templates')
-session =  Session(app)
 
 
-
-# Dropzone settings
-app.config['DROPZONE_UPLOAD_MULTIPLE'] = True
-app.config['DROPZONE_MAX_FILE_SIZE'] = 1024
-app.config['DROPZONE_ALLOWED_FILE_CUSTOM'] = True
-app.config['DROPZONE_ALLOWED_FILE_TYPE'] = '.csv, .xlsx, .xls'
 app.secret_key = "super secret key"
-
+config = {
+    # Dropzone settings
+    "DROPZONE_UPLOAD_MULTIPLE": True,
+    "DROPZONE_MAX_FILE_SIZE": 1024,
+    "DROPZONE_ALLOWED_FILE_CUSTOM": True,
+    "DROPZONE_ALLOWED_FILE_TYPE": '.csv, .xlsx, .xls',
+    "CACHE_TYPE": "simple", # Flask-Caching related configs
+    "CACHE_DEFAULT_TIMEOUT": 0
+}
+app.config.from_mapping(config)
+session =  Session(app)
+cache = Cache(app)
 dropzone = Dropzone(app)
 
 
@@ -25,6 +30,7 @@ dropzone = Dropzone(app)
 
 
 #Index page
+@cache.cached(timeout=120)
 @app.route('/', methods= ["GET"])
 def hello():
     return render_template("index.html", properties=app_properties);
@@ -32,6 +38,7 @@ def hello():
 
 #Get model tree
 @app.route('/model-tree')
+@cache.cached(timeout=120)
 def getStructure():
     try:
         session.model_tree
@@ -110,15 +117,8 @@ def setDataset():
         print("uploading...")
         if request.method == 'POST':
             data_file = request.files.get("file[0]")
-            session.X_train,session.X_test,session.y_train,session.y_test,session.cleaned_data = defineData(StringIO(data_file.read().decode("utf-8")))
-            
-            """session["cleaned_data"] = cleaned_data;
-            session["X_train"] = X_train
-            session["X_test"] = X_test
-            session["y_train"] = y_train
-            session["y_test"] = y_test"""
-
-        #cleaned_data = cleanAndSplit(csv_file)
+            session.X_train,session.X_test,session.y_train,session.y_test,session.cleaned_data = \
+                defineData(StringIO(data_file.read().decode("utf-8")))
         return jsonify(["UPLOAD SUCCESSFULL"])
     except Exception as e:
         print("Error "+str(e))

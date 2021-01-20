@@ -30,14 +30,15 @@ def runMethodForAll(methodName,material,model_tree):
 
         if(key=="DESC"):
             continue
-
-        newResult = runMethodForAll(methodName,material,model_tree=tmp[key])
-
         try:
-            allResults += newResult
-        except:
-            allResults.append(newResult)
+            newResult = runMethodForAll(methodName,material,tmp[key])
 
+            if(isinstance(newResult,list)):
+                allResults += newResult
+            else:
+                allResults.append(newResult)
+        except:
+            continue
     return allResults
 
 
@@ -45,7 +46,7 @@ def runMethodForAll(methodName,material,model_tree):
 def runMethodOfModel(methodName, args,material,model_tree):
     results = []
     if(args[-1]=="ALL IN ONE"):
-        results = runMethodForAll(methodName,material)
+        results = runMethodForAll(methodName,material,model_tree)
         if(not isinstance(results,str)):
             results = [most_frequent(results)]
     else:
