@@ -8,8 +8,7 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score,f1_score
 from xgboost import XGBClassifier
-from .preprocessing import *
-from .model_interface import *
+from ..model_interface import *
 
 def convert_results_to_str(y_test,y_pred):
   return str(confusion_matrix(y_test, y_pred))+"\n\n accuracy: "+str(accuracy_score(y_test,y_pred)) \

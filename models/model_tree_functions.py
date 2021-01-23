@@ -1,4 +1,4 @@
-from .model_tree import *
+from .model_getter import *
 #Get Model from dictionary by args
 def getModelFromTree(args,model_tree):
     model = model_tree[args[-1]]

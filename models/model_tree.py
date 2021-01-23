@@ -1,4 +1,4 @@
-from .model_getter import *
+from .models.basic_bow_models import *
 
 data_path = "dataset/7allV03.csv";
 

@@ -1,12 +1,12 @@
 from flask import Flask, jsonify, request, render_template
 from flask_dropzone import Dropzone
 from io import StringIO
-import pickle 
-from .models.model_tree_functions import *
 import os
 from flask_session import Session
 from flask_caching import Cache
-
+from .models.model_tree_functions import defineData, buildTreeByParamTree,runMethodOfModel, simplifyTree,\
+                                            get_train_test_dataset
+from .models.model_tree import *
 app = Flask(__name__, template_folder='templates')
 
 
