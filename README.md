@@ -1,5 +1,8 @@
 # Turkish Text Categorization
 
+### - Just Drag dataset and drop to the service, you can generate a Text Classifier AI by choosing available methods, train it, change parameters, split train-test samples, evaluate it and make it predict the given text.
+
+### - User can also add custom model by using Model Interface class
 
 ## Setup Directions
 
