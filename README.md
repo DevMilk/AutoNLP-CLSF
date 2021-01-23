@@ -19,7 +19,6 @@
 
 
 <p align="center">
-  <img src="https://github.com/DevMilk/Turkish-Text-Categorization/edit/main/usage/usage.gif">
 </p>            
 
 
