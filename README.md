@@ -19,7 +19,7 @@
 
 
 <p align="center">
-  <img src="https://github.com/DevMilk/AutoNLPClassifier/edit/main/usage/usage.gif">
+  <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/usage.gif">
 </p>            
 
 
