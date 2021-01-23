@@ -5,7 +5,7 @@
 ### - User can also add custom model by using Model Interface class
     
 ---
-## Usage    
+## Properties    
 
 
 1.  Prediction
@@ -25,6 +25,7 @@
     <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/usage.gif">
 </p>            
 
+---
 ## Features for Developers    
 
 1.  Easy model implementation/extension using Model Interface
@@ -34,6 +35,7 @@
     <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot3.png">
 </p>     
 
+---
 ## Setup Directions
 
 Python Version: 2.8.5
