@@ -3,16 +3,9 @@
 ### - Just Drag dataset and drop to the service, you can generate a Text Classifier AI by choosing available methods, train it, change parameters, split train-test samples, evaluate it and make it predict the given text.
 
 ### - User can also add custom model by using Model Interface class
-
-## Setup Directions
-
-Python Version: 2.8.5
-
-    pip install -r requirements.txt
-    flask run n
     
 ---
-## Usage Features    
+## Usage    
 
 
 1.  Prediction
@@ -40,5 +33,12 @@ Python Version: 2.8.5
 <p align="center">
     <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot3.png">
 </p>     
+
+## Setup Directions
+
+Python Version: 2.8.5
+
+    pip install -r requirements.txt
+    flask run n
 
 
