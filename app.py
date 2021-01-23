@@ -55,7 +55,7 @@ def getStructure():
 def get_param(): 
     parameters = request.get_json()
     args = parameters.get("args")
-    return jsonify(runMethodOfModel("get_params", args,(0,0),session.model_tree))
+    return jsonify(runMethodOfModel("get_params", args,(),session.model_tree))
 
 
 #Split Dataset

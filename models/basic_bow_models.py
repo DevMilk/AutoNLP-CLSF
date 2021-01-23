@@ -9,12 +9,13 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score,f1_score
 from xgboost import XGBClassifier
 from .preprocessing import *
+from .model_interface import *
 
 def convert_results_to_str(y_test,y_pred):
   return str(confusion_matrix(y_test, y_pred))+"\n\n accuracy: "+str(accuracy_score(y_test,y_pred)) \
     +"\n f1 score: " + str(f1_score(y_test,y_pred,average="weighted"))
 
-class BOW_Model:
+class BOW_Model(Model_Interface):
   def __init__(self, model):
 
     self.models = {
@@ -28,7 +29,7 @@ class BOW_Model:
     self.subModelName = model
     self.updateModel(self.models[model])
 
-  def get_params(self,a,b):
+  def get_params(self):
     model = self.models[self.subModelName]
     return model.get_params()
 
