@@ -21,7 +21,7 @@ def cleanAndSplit(data,split=0.2):
     if(len(cleaned_data["class"].unique()) > len(cleaned_data["text"].unique())):
         cleaned_data.rename(columns={'class': 'text', 'text':'class'},inplace=True) 
 
-    return train_test_split(cleaned_data["text"],cleaned_data["class"],test_size=test_ratio),cleaned_data
+    return train_test_split(cleaned_data["text"],cleaned_data["class"],test_size=split),cleaned_data
 
 
 def defineData(data_path,split=0.2):
