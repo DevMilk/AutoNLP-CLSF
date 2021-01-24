@@ -1,4 +1,4 @@
-# Turkish Text Categorization
+# Automated Text Classifier Builder Web Service
     
 ---
 ## Usage    
