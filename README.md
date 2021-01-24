@@ -5,7 +5,7 @@
 ---
 ## Usage    
 
-1.  Drag and Drop dataset
+1.  Drag and drop a dataset
 2.  Choose a text classification method
 3.  Train and Create an AI that classifies text using chosen method with parameter selection option
 4.  Evaluate Trained AI Model and see metrics like F1 Score, Accuracy and Confusion Matrix
