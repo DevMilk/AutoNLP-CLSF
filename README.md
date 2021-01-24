@@ -1,18 +1,16 @@
 # Turkish Text Categorization
 
-### - Just Drag dataset and drop to the service, you can generate a Text Classifier AI by choosing available methods, train it, change parameters, split train-test samples, evaluate it and make it predict the given text.
-
 ### - User can also add custom model by using Model Interface class
     
 ---
-## Properties    
+## Usage    
 
-
-1.  Prediction
-2.  Dataset Splitting
-3.  Training by parameter change option
-4.  Testing/Evaluation
-5.  Drag and Drop Dataset Change
+1.  Drag and Drop dataset
+2.  Choose a text classification method
+3.  Train and Create an AI that classifies text using chosen method with parameter selection option
+4.  Evaluate Trained AI Model and see metrics like F1 Score, Accuracy and Confusion Matrix
+5.  Make the Trained AI Classify given Input
+6.  User can optionally change train-test split of dataset 
 
 
 <p align="center">
