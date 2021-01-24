@@ -25,6 +25,17 @@
 </p>       
 
 ---
+
+## Automated Properties
+
+1.  Text preprocessing (Lemmatization, stopwords removal etc. )
+2.  HTML Form generation based on parameters of method
+3.  HTML Menu generation based on model tree dictionary on Python code
+4.  Model initialization on model tree from parameter tree
+5.  Model Training, Evaluation, Prediction and parameter setting
+
+---
+
 ## Features for Developers/Contributors    
 
 1.  Easy model implementation/extension using Model Interface
