@@ -14,15 +14,15 @@
 
 
 <p align="center">
+    <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/usage.gif">
+</p>            
+
+<p align="center">
   <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot.png">
 </p>        
 <p align="center">
   <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot2.png">
 </p>       
-<p align="center">
-    <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/usage.gif">
-</p>            
-
 ---
 ## Features for Developers    
 
