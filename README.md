@@ -31,11 +31,11 @@ After the training is over, user can now:
 ## Automated Properties
 
 -  Text preprocessing (Lemmatization, stopwords removal etc. )
--  HTML Form generation based on parameters of method
--  HTML Menu generation based on model tree dictionary on Python code
+-  HTML form generation based on parameters of method
+-  HTML menu generation based on model tree dictionary on Python code
 -  Model initialization on model tree from parameter tree
--  Model Training, Evaluation, Prediction and parameter setting
--  Server-side Session per user
+-  Model training, evaluation, prediction and parameter change implementation
+-  Server-side session per user
 -  Caching
 ---
 
