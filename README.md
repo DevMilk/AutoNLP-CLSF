@@ -1,6 +1,4 @@
 # Turkish Text Categorization
-
-### - User can also add custom model by using Model Interface class
     
 ---
 ## Usage    
