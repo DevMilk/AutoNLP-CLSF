@@ -1,4 +1,4 @@
-# Automated Text Classifier Builder Web Service
+<h1 align="center">Automated Text Classifier Builder Web Service</h1>
     
 ---
 ## Usage    
