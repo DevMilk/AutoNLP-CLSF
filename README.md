@@ -3,12 +3,14 @@
 ---
 ## Usage    
 
-1.  Drag and drop a dataset
-2.  Choose a text classification method
-3.  Train and Create an AI that classifies text using chosen method with parameter selection option
-4.  Evaluate Trained AI Model and see metrics like F1 Score, Accuracy and Confusion Matrix
-5.  Make the Trained AI Classify given Input
-6.  User can optionally change train-test split of dataset 
+1.  Drag and drop a dataset.
+2.  Choose a text classification method.
+3.  Send parameters and wait for the training to finish.
+
+After the training is over, user can now: 
+-  Evaluate Trained AI Model and see metrics like F1 Score, Accuracy and Confusion Matrix
+-  Make the Trained AI Classify given Input
+-  Optionally change train-test split of dataset 
 
 <br>
 <br>
@@ -33,7 +35,8 @@
 3.  HTML Menu generation based on model tree dictionary on Python code
 4.  Model initialization on model tree from parameter tree
 5.  Model Training, Evaluation, Prediction and parameter setting
-
+6.  Server-side Session per user
+7.  Caching
 ---
 
 ## Features for Developers/Contributors    
