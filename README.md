@@ -44,6 +44,6 @@
 Python Version: 2.8.5
 
     pip install -r requirements.txt
-    flask run n
+    flask run
 
 
