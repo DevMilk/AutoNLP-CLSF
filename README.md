@@ -23,6 +23,7 @@
 <p align="center">
   <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot2.png">
 </p>       
+
 ---
 ## Features for Developers    
 
