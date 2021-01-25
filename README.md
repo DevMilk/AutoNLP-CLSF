@@ -53,7 +53,6 @@ After the training is over, user can now:
 ---
 ## Setup Directions
 
-Python Version: 2.8.5
 
     pip install -r requirements.txt
     flask run
