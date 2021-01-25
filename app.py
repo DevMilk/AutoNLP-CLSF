@@ -4,9 +4,9 @@ from io import StringIO
 import os
 from flask_session import Session
 from flask_caching import Cache
-from .models.model_tree_functions import defineData, buildTreeByParamTree,runMethodOfModel, simplifyTree,\
+from models.model_tree_functions import defineData, buildTreeByParamTree,runMethodOfModel, simplifyTree,\
                                             get_train_test_dataset
-from .models.model_tree import *
+from models.model_tree import *
 app = Flask(__name__, template_folder='templates')
 
 
