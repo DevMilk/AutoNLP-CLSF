@@ -2,7 +2,7 @@
     
 ---
 ## Usage    
-
+Deployed on Heroku: https://automilk.herokuapp.com/
 1.  Drag and drop a dataset.
 2.  Choose a text classification method.
 3.  Send parameters and wait for the training to finish.
@@ -16,14 +16,14 @@ After the training is over, user can now:
 <br>
 <br>
 <p align="center">
-    <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/usage.gif">
+    <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/for_heroku/usage/usage.gif">
 </p>            
 
 <p align="center">
-  <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot.png">
+  <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/for_heroku/usage/screenshot.png">
 </p>        
 <p align="center">
-  <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot2.png">
+  <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/for_heroku/usage/screenshot2.png">
 </p>       
 
 ---
@@ -47,13 +47,12 @@ After the training is over, user can now:
 <br>
 <br>
 <p align="center">
-    <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot3.png">
+    <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/for_heroku/usage/screenshot3.png">
 </p>     
 
 ---
 ## Setup Directions
 
-Python Version: 2.8.5
 
     pip install -r requirements.txt
     flask run
