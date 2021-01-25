@@ -2,7 +2,7 @@
     
 ---
 ## Usage    
-
+Deployed on Heroku: https://automilk.herokuapp.com/
 1.  Drag and drop a dataset.
 2.  Choose a text classification method.
 3.  Send parameters and wait for the training to finish.
