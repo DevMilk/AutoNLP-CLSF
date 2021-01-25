@@ -16,14 +16,14 @@ After the training is over, user can now:
 <br>
 <br>
 <p align="center">
-    <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/usage.gif">
+    <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/local/usage/usage.gif">
 </p>            
 
 <p align="center">
-  <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot.png">
+  <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/local/usage/screenshot.png">
 </p>        
 <p align="center">
-  <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot2.png">
+  <img width =704 height=396 src="https://github.com/DevMilk/AutoNLPClassifier/blob/local/usage/screenshot2.png">
 </p>       
 
 ---
@@ -47,7 +47,7 @@ After the training is over, user can now:
 <br>
 <br>
 <p align="center">
-    <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/main/usage/screenshot3.png">
+    <img src="https://github.com/DevMilk/AutoNLPClassifier/blob/local/usage/screenshot3.png">
 </p>     
 
 ---
