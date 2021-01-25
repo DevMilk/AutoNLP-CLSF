@@ -1,6 +1,6 @@
 from .models.basic_bow_models import *
 
-data_path = "dataset/7allV03.csv";
+data_path = "dataset/example_dataset.csv";
 
 
 app_properties = {
